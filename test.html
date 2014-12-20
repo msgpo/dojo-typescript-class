@@ -1,0 +1,34 @@
+<html>
+<head>
+  <script src="lib/require.js"></script>
+  <script src="lib/nodeunit.js"></script>
+  <style>
+    HTML {
+      font-family: sans-serif;
+    }
+  LI.fail {
+    background-color: #ff8888;
+    cursor: pointer;
+  }
+  </style>
+</head>
+<body>
+  <h1>Dojo + TypeScript class test page</h1>
+<script>
+  requirejs.config({
+    map: {
+      '*': {
+        'dojo': 'lib/dojo-release-1.10.3-src/dojo'
+      }
+    }
+  });
+  
+require(["testsuite"], function(testsuite) {
+  nodeunit.run({
+    'testsuite': testsuite
+  });
+});
+</script>
+  
+</body>
+</html>
