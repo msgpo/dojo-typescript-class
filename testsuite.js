@@ -1,6 +1,8 @@
-define(["MyDojoBaseClass", "MyDojoSubclass", "MyTSDojoBaseClass", "MyTSDojoSubclass", "MyHybridDojoSubclass"],
-       function(MyDojoBaseClass, MyDojoSubclass, mytsdojobaseclass, mytsdojosubclass, myhybriddojosubclass) {
+define(["dojo/aspect", "MyDojoBaseClass", "MyDojoSubclass", "MyTSDojoBaseClass", "MyTSDojoSubclass", "MyHybridDojoSubclass"],
+       function(aspect, MyDojoBaseClass, MyDojoSubclass, mytsdojobaseclass, mytsdojosubclass, myhybriddojosubclass) {
   return {
+    
+    // Tests for the base Dojo functionality.
     'testJSDojoClasses': function(test) {
       var baseObj = new MyDojoBaseClass();
       test.equal(baseObj.constructor._meta.bases.length, 1);
@@ -19,6 +21,7 @@ define(["MyDojoBaseClass", "MyDojoSubclass", "MyTSDojoBaseClass", "MyTSDojoSubcl
       test.done();
     },
     
+    // Same tests as above except for two classes implemented in TypeScript.
     'testTypeScriptDojoClasses': function(test) {
       var baseObj = new mytsdojobaseclass.MyTSDojoBaseClass();
       test.equal(baseObj.constructor._meta.bases.length, 1);
@@ -36,6 +39,7 @@ define(["MyDojoBaseClass", "MyDojoSubclass", "MyTSDojoBaseClass", "MyTSDojoSubcl
       test.done();
     },
     
+    // JS/Dojo base class with TypeScript subclass.
     'testHybridDojoSubclass': function(test) {
       var baseObj = new MyDojoBaseClass();      
       var subObj = new myhybriddojosubclass.MyHybridDojoSubclass();
@@ -49,11 +53,38 @@ define(["MyDojoBaseClass", "MyDojoSubclass", "MyTSDojoBaseClass", "MyTSDojoSubcl
 
       test.done();
     },
-  
-    'testTypeScriptFunctionNom': function(test) {
+    
+    // Isolate this one test for debugging.
+    'testTypeScriptFunctionNom': function(test) { 
       var baseObj = new mytsdojobaseclass.MyTSDojoBaseClass();
       test.equal(baseObj.message.nom, "message");
       test.done();
+    },
+    
+    //---------------------------------
+    'testDojoAspect': function(test) {
+      var baseObj = new MyDojoBaseClass();      
+      var called = false;
+      aspect.after(baseObj, 'message', function() {
+        called = true;
+      });
+      
+      baseObj.message();
+      test.ok(called, "Aspect after call back was used.");
+      test.done();
+    },
+    
+    'testTypeScriptDojoAspect': function(test) {
+      var baseObj = new mytsdojobaseclass.MyTSDojoBaseClass();      
+      var called = false;
+      aspect.after(baseObj, 'message', function() {
+        called = true;
+      });
+      
+      baseObj.message();
+      test.ok(called, "Aspect after call back was used.");
+      test.done();
     }
+
   };
 });
