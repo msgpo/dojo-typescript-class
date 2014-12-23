@@ -1,5 +1,5 @@
-define(["dojo/aspect", "MyDojoBaseClass", "MyDojoSubclass", "MyTSDojoBaseClass", "MyTSDojoSubclass", "MyHybridDojoSubclass"],
-       function(aspect, MyDojoBaseClass, MyDojoSubclass, mytsdojobaseclass, mytsdojosubclass, myhybriddojosubclass) {
+define(["dojo/aspect", "MyDojoBaseClass", "MyDojoSubclass", "MyTSDojoBaseClass", "MyTSDojoSubclass", "MyHybridDojoSubclass", "MyDijit"],
+       function(aspect, MyDojoBaseClass, MyDojoSubclass, mytsdojobaseclass, mytsdojosubclass, myhybriddojosubclass, MyDijit) {
   return {
     
     // Tests for the base Dojo functionality.
@@ -83,6 +83,20 @@ define(["dojo/aspect", "MyDojoBaseClass", "MyDojoSubclass", "MyTSDojoBaseClass",
       
       baseObj.message();
       test.ok(called, "Aspect after call back was used.");
+      test.done();
+    },
+    
+    //---------------------------------
+    // A simple JS and Dojo Dijit.
+    'testMyDijit': function(test) {
+      var dijitArea = document.getElementById("test_dijit_area");
+      dijitArea.innerHTML = "";
+      
+      var myDijitInstance = new MyDijit();
+      myDijitInstance.placeAt(dijitArea, "first");
+      
+      test.equal(dijitArea.childNodes[0].innerHTML, "My Dijit");
+      
       test.done();
     }
 

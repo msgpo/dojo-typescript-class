@@ -22,8 +22,8 @@ There are a couple of steps needed to run the tests for this code.
 * Go to http://dojotoolkit.org/download/ and download the source zip and
   unzip it under the lib/ directory. (You may have to pop open test.html
   and adjust the requirejs config.)
-* Execute either `make.bat` or `make.sh` .
-* Open `test.html` in a browser.
+* Run `npm test`
+* Go to http://localhost:3000/test.html in a browser to run the tests.
 
 Improvements and more tests are welcome.
 

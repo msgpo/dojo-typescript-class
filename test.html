@@ -18,7 +18,8 @@
   requirejs.config({
     map: {
       '*': {
-        'dojo': 'lib/dojo-release-1.10.3-src/dojo'
+        'dojo': 'lib/dojo-release-1.10.3-src/dojo',
+        'dijit': 'lib/dojo-release-1.10.3-src/dijit'
       }
     }
   });
@@ -29,6 +30,6 @@ require(["testsuite"], function(testsuite) {
   });
 });
 </script>
-  
+  <div id="test_dijit_area"></div>
 </body>
 </html>
