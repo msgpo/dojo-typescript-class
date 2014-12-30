@@ -1,10 +1,11 @@
-define(["dojo/aspect", "MyDojoBaseClass", "MyDojoSubclass", "MyTSDojoBaseClass", "MyTSDojoSubclass", "MyHybridDojoSubclass", "MyDijit"],
-       function(aspect, MyDojoBaseClass, MyDojoSubclass, mytsdojobaseclass, mytsdojosubclass, myhybriddojosubclass, MyDijit) {
+define(["dojo/aspect", "dijit/_WidgetBase", "MyDojoBaseClass", "MyDojoSubclass", "MyTSDojoBaseClass", "MyTSDojoSubclass", "MyHybridDojoSubclass", "MyDijit", "MyTSDijit"],
+       function(aspect, _WidgetBase, MyDojoBaseClass, MyDojoSubclass, mytsdojobaseclass, mytsdojosubclass, myhybriddojosubclass, MyDijit, MyTSDijit) {
   return {
     
     // Tests for the base Dojo functionality.
     'testJSDojoClasses': function(test) {
       var baseObj = new MyDojoBaseClass();
+      test.ok(baseObj.constructor !== undefined);
       test.equal(baseObj.constructor._meta.bases.length, 1);
       test.equal(baseObj.message(), "[MyDojoBaseClass message]");
       test.equal(baseObj.message.nom, "message");
@@ -24,6 +25,7 @@ define(["dojo/aspect", "MyDojoBaseClass", "MyDojoSubclass", "MyTSDojoBaseClass",
     // Same tests as above except for two classes implemented in TypeScript.
     'testTypeScriptDojoClasses': function(test) {
       var baseObj = new mytsdojobaseclass.MyTSDojoBaseClass();
+      test.ok(baseObj.constructor !== undefined);
       test.equal(baseObj.constructor._meta.bases.length, 1);
       test.equal(baseObj.message(), "[MyDojoBaseClass message]");
       
@@ -85,7 +87,7 @@ define(["dojo/aspect", "MyDojoBaseClass", "MyDojoSubclass", "MyTSDojoBaseClass",
       test.ok(called, "Aspect after call back was used.");
       test.done();
     },
-    
+
     //---------------------------------
     // A simple JS and Dojo Dijit.
     'testMyDijit': function(test) {
@@ -96,7 +98,30 @@ define(["dojo/aspect", "MyDojoBaseClass", "MyDojoSubclass", "MyTSDojoBaseClass",
       myDijitInstance.placeAt(dijitArea, "first");
       
       test.equal(dijitArea.childNodes[0].innerHTML, "My Dijit");
+      myDijitInstance.destroy();
+      test.done();
+    },
+
+    //---------------------------------
+    // A simple JS and Dojo Dijit.
+    'testMyTSDijit': function(test) {
+      var dijitArea = document.getElementById("test_dijit_area");
+      dijitArea.innerHTML = "";
       
+      var myTSDijitInstance = new MyTSDijit();
+      test.equal(myTSDijitInstance.getTSMessage(), "TS message from MyTSDijit");
+      
+      myTSDijitInstance.placeAt(dijitArea, "first");
+   
+      test.equal(dijitArea.childNodes[0].innerHTML, "My TS Dijit");
+      
+      myTSDijitInstance.destroy();
+      test.done();
+    },
+    
+    'testGlobalDijit': function(test) {
+      // Access to a Dijit via AMD should have the same result as access in the old school global.
+      test.ok(_WidgetBase === dijit._WidgetBase);
       test.done();
     }
 

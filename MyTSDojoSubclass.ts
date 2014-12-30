@@ -18,4 +18,4 @@ export class MyTSDojoSubclass extends mytsdojobaseclass.MyTSDojoBaseClass {
     return <string> dojoClass.inherited(this, "messageChained", arguments) + this.message();
   }
 }
-dojoClass.create(MyTSDojoSubclass, [mytsdojobaseclass.MyTSDojoBaseClass])
+dojoClass.create("MyTSDojoSubclass", MyTSDojoSubclass, [mytsdojobaseclass.MyTSDojoBaseClass])

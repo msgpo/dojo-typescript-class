@@ -14,4 +14,4 @@ export class MyTSDojoBaseClass {
     return "[MyDojoBaseClass chained message]";
   }
 }
-dojoClass.create(MyTSDojoBaseClass, []);
+dojoClass.create("MyTSDojoBaseClass", MyTSDojoBaseClass, []);

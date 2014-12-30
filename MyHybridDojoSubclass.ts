@@ -18,4 +18,4 @@ export class MyHybridDojoSubclass extends MyDojoBaseClass {
     return <string> dojoClass.inherited(this, "messageChained", arguments) + this.message();
   }
 }
-dojoClass.create(MyHybridDojoSubclass, [MyDojoBaseClass]);
+dojoClass.create("MyHybridDojoSubclass", MyHybridDojoSubclass, [MyDojoBaseClass]);
